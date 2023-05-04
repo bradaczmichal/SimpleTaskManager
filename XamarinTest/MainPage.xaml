@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinTest.MainPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="BackgroundColor" Value="DeepSkyBlue"/>
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="HeightRequest" Value="30"/>
+                <Setter Property="WidthRequest" Value="30"/>
+                
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout>
+        <Frame BackgroundColor="Gray" HeightRequest="100" WidthRequest="100" Margin="120,50,120,0" CornerRadius="80">
+            <Label Text="Application" FontSize="36" TextColor="RoyalBlue" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+        </Frame>
+
+        <Grid HeightRequest="500" Margin="120,50,120,50">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <!--HorizontalTextAlignment="Start" VerticalTextAlignment="End" -->
+            <Frame BackgroundColor="DarkGray" Grid.ColumnSpan="6" Grid.RowSpan="8" CornerRadius="20" />
+            <Label Text="SIGN IN" FontSize="36" TextColor="RoyalBlue" Grid.ColumnSpan="2" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="End"/>
+            <Label Text="Username" FontSize="20" TextColor="LightSkyBlue" Grid.ColumnSpan="2" Grid.Row="1" Margin="20,50,0,-20" HorizontalTextAlignment="Start" VerticalTextAlignment="End"  />
+            <Entry x:Name="LoginInput" Grid.ColumnSpan="6" Grid.Row="2" Margin="20,20,20,0"/>
+            <Label Text="Password" FontSize="20" TextColor="LightSkyBlue" Grid.ColumnSpan="2" Grid.Row="3" Margin="20,0,0,0" HorizontalTextAlignment="Start" VerticalTextAlignment="End"/>
+            <Entry x:Name="PasswordInput" Grid.ColumnSpan="6" Grid.Row="4" Margin="20,0,20,20"/>
+            <Button x:Name="LoginButton" Text="Login" Grid.ColumnSpan="6" Grid.Row="5" Margin="20,10,20,0"/>
+            <Button x:Name="RegisterButton" Text="Register" Grid.ColumnSpan="3" Grid.Row="6" Margin="20,7,0,0"/>
+            <Button x:Name="ExitButton" Text="Exit" Grid.ColumnSpan="3" Grid.Row="6" Grid.Column="3" Margin="0,7,20,0"/>
+
+
+        </Grid>
+    </StackLayout>
+
+</ContentPage>
