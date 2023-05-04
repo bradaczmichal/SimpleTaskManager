@@ -6,6 +6,6 @@
     <Application.Resources>
         <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
             <Setter Property="BackgroundColor" Value="LightGray" />
-        </Style>
+        </Style> 
     </Application.Resources>
 </Application>
