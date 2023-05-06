@@ -15,11 +15,6 @@ namespace XamarinTest
 		public SignUpPage ()
 		{
 			InitializeComponent ();
-		}
-
-        private void BackClicked(object sender, EventArgs e)
-        {
-			Navigation.PushAsync (new MainPage());
-        }
+		}       
     }
 }

@@ -18,5 +18,10 @@ namespace XamarinTest
         {
             Navigation.PushAsync(new SignUpPage());
         }
+
+        private void ExitClicked(object sender, EventArgs e)
+        {
+           System.Environment.Exit(0);
+        }
     }
 }
