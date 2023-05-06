@@ -14,15 +14,9 @@ namespace XamarinTest
         {
             InitializeComponent();
         }
-
-        private void greenClicked(object sender, EventArgs e)
+        private void SignUpClicked(object sender, EventArgs e)
         {
-            //labelColor.Text = "Color clicked: green";
-        }
-
-        private void blueClicked(object sender, EventArgs e)
-        {
-            //labelColor.Text = "Color clicked: blue";
+            Navigation.PushAsync(new SignUpPage());
         }
     }
 }
