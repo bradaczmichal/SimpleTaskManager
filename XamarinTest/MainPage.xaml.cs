@@ -23,5 +23,10 @@ namespace XamarinTest
         {
            System.Environment.Exit(0);
         }
+        
+        private void LoginClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new Page1());
+        }
     }
 }
