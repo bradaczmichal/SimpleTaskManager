@@ -26,7 +26,7 @@ namespace XamarinTest
         
         private void LoginClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new Page1());
+            Navigation.PushAsync(new AppPage());
         }
     }
 }
