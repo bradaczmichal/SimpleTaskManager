@@ -22,11 +22,11 @@
                         </StackLayout>
                         <StackLayout Margin="0,30,0,0">
                             <Frame BackgroundColor="White" BorderColor="Black" CornerRadius="40" HorizontalOptions="FillAndExpand" HeightRequest="35">
-                                <Entry Placeholder="Login" TextColor="DodgerBlue" HorizontalOptions="FillAndExpand" FontSize="13"/>
+                                <Entry x:Name="LoginEntry" Placeholder="Login" TextColor="DodgerBlue" HorizontalOptions="FillAndExpand" FontSize="13"/>
                             </Frame>
                         <StackLayout Margin="0,20,0,0">
                                 <Frame BackgroundColor="White" BorderColor="Black" CornerRadius="40" HorizontalOptions="FillAndExpand" HeightRequest="35">
-                                    <Entry Placeholder="Password" IsPassword="True" TextColor="DodgerBlue" HorizontalOptions="FillAndExpand" FontSize="13"/>
+                                    <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" TextColor="DodgerBlue" HorizontalOptions="FillAndExpand" FontSize="13"/>
                                 </Frame>
 
                         </StackLayout>

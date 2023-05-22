@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -24,9 +25,21 @@ namespace XamarinTest
            System.Environment.Exit(0);
         }
         
-        private void LoginClicked(object sender, EventArgs e)
+        private async void LoginClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new AppPage());
+            try
+            {
+                if (string.IsNullOrWhiteSpace(LoginEntry.Text) || string.IsNullOrWhiteSpace(PasswordEntry.Text))
+                {
+                    throw new Exception("Invalid input");
+                }
+                string login = LoginEntry.Text;
+                await Navigation.PushAsync(new AppPage());
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"{ex.Message}", "Ok");
+            }
         }
     }
 }
