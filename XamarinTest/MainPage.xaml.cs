@@ -33,13 +33,16 @@ namespace XamarinTest
                 {
                     throw new Exception("Invalid input");
                 }
-                string login = LoginEntry.Text;
                 await Navigation.PushAsync(new AppPage());
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", $"{ex.Message}", "Ok");
+                OnDisplayAlert(ex);
             }
+        }
+        private async void OnDisplayAlert(Exception ex)
+        {
+            await DisplayAlert("Error", $"{ex.Message}", "Ok");
         }
     }
 }
