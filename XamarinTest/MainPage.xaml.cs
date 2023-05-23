@@ -37,12 +37,12 @@ namespace XamarinTest
             }
             catch (Exception ex)
             {
-                OnDisplayAlert(ex);
+                DisplayInvalidInput(ex);
             }
         }
-        private async void OnDisplayAlert(Exception ex)
+        private async void DisplayInvalidInput(Exception ex)
         {
-            await DisplayAlert("Error", $"{ex.Message}", "Ok");
+            await DisplayAlert("Error", $"{ex.Message}!", "OK");
         }
     }
 }

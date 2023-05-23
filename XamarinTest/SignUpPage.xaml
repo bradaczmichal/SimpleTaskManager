@@ -19,19 +19,19 @@
                         </StackLayout>
                         <StackLayout Margin="0,30,0,0">
                             <Frame BackgroundColor="White" BorderColor="Black" CornerRadius="40" HorizontalOptions="FillAndExpand" HeightRequest="35">
-                                <Entry Placeholder="First Name" TextColor="DodgerBlue" HorizontalOptions="FillAndExpand" FontSize="13"/>
+                                <Entry x:Name="FirstNameEntry" Placeholder="First Name" TextColor="DodgerBlue" HorizontalOptions="FillAndExpand" FontSize="13"/>
                             </Frame>
                             <StackLayout Margin="0,15,0,0">
                                 <Frame BackgroundColor="White" BorderColor="Black" CornerRadius="40" HorizontalOptions="FillAndExpand" HeightRequest="35">
-                                    <Entry Placeholder="Last Name" TextColor="DodgerBlue" HorizontalOptions="FillAndExpand" FontSize="13"/>
+                                    <Entry x:Name="LastNameEntry" Placeholder="Last Name" TextColor="DodgerBlue" HorizontalOptions="FillAndExpand" FontSize="13"/>
                                 </Frame>
                                 <StackLayout Margin="0,15,0,0">
                                     <Frame BackgroundColor="White" BorderColor="Black" CornerRadius="40" HorizontalOptions="FillAndExpand" HeightRequest="35">
-                                        <Entry Placeholder="Login" TextColor="DodgerBlue" HorizontalOptions="FillAndExpand" FontSize="13"/>
+                                        <Entry x:Name="UsernameEntry" Placeholder="Username" TextColor="DodgerBlue" HorizontalOptions="FillAndExpand" FontSize="13"/>
                                     </Frame>
                                     <StackLayout Margin="0,15,0,0">
                                         <Frame BackgroundColor="White" BorderColor="Black" CornerRadius="40" HorizontalOptions="FillAndExpand" HeightRequest="35">
-                                            <Entry Placeholder="Password" IsPassword="True" TextColor="DodgerBlue" HorizontalOptions="FillAndExpand" FontSize="13"/>
+                                            <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" TextColor="DodgerBlue" HorizontalOptions="FillAndExpand" FontSize="13"/>
                                         </Frame>
 
                                     </StackLayout>
@@ -40,7 +40,7 @@
                             </StackLayout>
                         </StackLayout>
                         <StackLayout>
-                            <Button Margin ="50,30,50,0" HeightRequest="60" CornerRadius="30" BackgroundColor="DodgerBlue" Text="Register" TextColor="White" FontSize="20" FontAttributes="Bold" FontFamily="Cambria"/>
+                            <Button Margin ="50,30,50,0" HeightRequest="60" CornerRadius="30" BackgroundColor="DodgerBlue" Text="Register" TextColor="White" FontSize="20" FontAttributes="Bold" FontFamily="Cambria" Clicked="RegisterClicked"/>
                         </StackLayout>
                     </StackLayout>
 
