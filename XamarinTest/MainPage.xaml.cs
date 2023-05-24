@@ -41,11 +41,17 @@ namespace XamarinTest
             catch (Exception ex)
             {
                 await OnDisplayAlert(ex);
+                ClearEntry();
             }
         }
         private async Task OnDisplayAlert(Exception ex)
         {
             await DisplayAlert("Error", $"{ex.Message}!", "OK");
+        }
+        private void ClearEntry()
+        {
+            LoginEntry.Text = string.Empty;
+            PasswordEntry.Text = string.Empty;          
         }
     }
 }

@@ -24,15 +24,15 @@ namespace XamarinTest
             try
             {  
                 if(string.IsNullOrWhiteSpace(AddTaskEntry.Text))
-                {
-                    AddTaskEntry.Text = "";
+                {                    
                     throw new Exception("Invalid input!");                   
                 }
                 user.AddTask(AddTaskEntry.Text);
                 await OnDisplayAlert();
+                ClearEntry();
             }
             catch (Exception ex)
-            {
+            {                
                 await OnDisplayAlert(ex);
             }
             
@@ -44,6 +44,10 @@ namespace XamarinTest
         private async Task OnDisplayAlert()
         {
             await DisplayAlert("Success", "Your task has been added!", "OK");
+        }
+        private void ClearEntry()
+        {
+            AddTaskEntry.Text = string.Empty;
         }
     }
 }

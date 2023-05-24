@@ -23,7 +23,6 @@ namespace XamarinTest
 			{
 				if (string.IsNullOrWhiteSpace(FirstNameEntry.Text) || string.IsNullOrWhiteSpace(LastNameEntry.Text) ||
 					string.IsNullOrWhiteSpace(UsernameEntry.Text) || string.IsNullOrWhiteSpace(PasswordEntry.Text))
-	
 				{
 					throw new Exception("Invalid input");
 				}
@@ -38,6 +37,7 @@ namespace XamarinTest
 			catch (Exception ex)
             {
 				await OnDisplayAlert(ex);
+				ClearEntry();
             }
         }
 		private async Task OnDisplayAlert(Exception ex)
@@ -48,5 +48,12 @@ namespace XamarinTest
         {
 			await DisplayAlert("Success", $"Congratulations {FirstName } {LastName} your account has been created!", "OK");
         }
+		private void ClearEntry()
+        {
+			FirstNameEntry.Text = string.Empty;
+			LastNameEntry.Text = string.Empty;
+			UsernameEntry.Text = string.Empty;
+			PasswordEntry.Text = string.Empty;
+		}
     }
 }
