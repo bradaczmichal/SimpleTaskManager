@@ -21,14 +21,23 @@
                             <Label x:Name="NoTasksLabel" Text="No tasks added!" IsVisible="false" HorizontalTextAlignment="Center" FontSize="22" Margin="0,50,0,0"/>
                          </StackLayout>
                             <StackLayout>
-                            <ListView x:Name="listView">
+                            <ListView x:Name="listView" Margin="0,30,0,0">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
-                                            <StackLayout Orientation="Horizontal">
-                                                <Label Text="{Binding Number}" />
-                                                <Label Text="{Binding Text}" />
-                                            </StackLayout>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Label Text="{Binding Id}" VerticalTextAlignment="Center" Margin="10,0,0,10" Grid.Column="0" />
+                                                <Label Text="{Binding Description}" VerticalTextAlignment="Center" Margin="10,0,0,10" Grid.Column="1" />
+                                                <Button Text="Edit" Clicked="EditButtonClicked" Margin="0,0,10,10" WidthRequest="60" Grid.Column="2" HorizontalOptions="End" />
+                                                <Button Text="Delete" Clicked="DeleteButtonClicked" Margin="0,0,10,10" WidthRequest="60" Grid.Column="3" HorizontalOptions="End" />
+                                            </Grid>
                                         </ViewCell>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

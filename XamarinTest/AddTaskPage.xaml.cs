@@ -25,7 +25,8 @@ namespace XamarinTest
             {  
                 if(string.IsNullOrWhiteSpace(AddTaskEntry.Text))
                 {
-                    throw new Exception("Invalid input!");
+                    AddTaskEntry.Text = "";
+                    throw new Exception("Invalid input!");                   
                 }
                 user.AddTask(AddTaskEntry.Text);
                 await OnDisplayAlert();

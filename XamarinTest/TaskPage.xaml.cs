@@ -21,13 +21,15 @@ namespace XamarinTest
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            ShowTasks();
+           
+        }
+        private void ShowTasks()
+        {
+            var Tasks = user.Tasks;
+            bool isEmpty = Tasks.Count == 0 ? true : false;
 
-            string[] tasks = user.Tasks;
-            List<ItemViewModel>items = new List<ItemViewModel>();
-
-            bool CheckIfEmpty = tasks.All(string.IsNullOrEmpty);
-
-            if (CheckIfEmpty)
+            if (isEmpty)
             {
                 NoTasksLabel.IsVisible = true;
                 listView.IsVisible = false;
@@ -35,17 +37,20 @@ namespace XamarinTest
             else
             {
                 NoTasksLabel.IsVisible = false;
-                listView.IsVisible = true;
-                for (int i = 0; i < tasks.Length; i++)
-                {
-                    if (!string.IsNullOrWhiteSpace(tasks[i]))
-                    {
-                        string numberWithDot = $"{i + 1}.";
-                        items.Add(new ItemViewModel { Number = numberWithDot, Text = tasks[i] });
-                    }
-                }
-                listView.ItemsSource = items;
-            }          
+                listView.IsVisible = true;                                         
+                listView.ItemsSource = Tasks;
+            }
+        }       
+        private void DeleteButtonClicked(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            Tasks task = (Tasks)button.BindingContext;
+            //user.RemoveTask(task);
+        }
+
+        private void EditButtonClicked(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -8,26 +8,18 @@ namespace XamarinTest
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public string [] Tasks { get; set; }
-        public int NumberOfTasks { get; private set; }
+        public List<Tasks> Tasks { get; set; }
         
-        public void AddTask(string task)
+        public void AddTask(string description)
         {
-            if (NumberOfTasks < Tasks.Length)
-            {
-                Tasks[NumberOfTasks] = task;
-                NumberOfTasks++;
-            }
-            else
-            {
-                throw new Exception("There are no place for another task");
-            }
+            Tasks task = new Tasks(description);
+            Tasks.Add(task);
         }
         public User(string firstName, string lastName, string username, string password) : base(firstName, lastName)
         {
             this.Username = username;
             this.Password = password;
-            this.Tasks = new string[100];
+            this.Tasks = new List<Tasks>();
         }
         public User() { }
     }
