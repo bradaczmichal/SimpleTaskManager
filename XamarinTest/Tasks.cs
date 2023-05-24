@@ -6,7 +6,7 @@ namespace XamarinTest
 {
     class Tasks
     {
-        private static int TaskIdCounter { get; set; }
+        public static int TaskIdCounter { get; set; }
         public string Id { get; set; }
         public string Description { get; set; }
 

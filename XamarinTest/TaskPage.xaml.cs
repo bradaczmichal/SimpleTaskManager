@@ -26,8 +26,8 @@ namespace XamarinTest
         }
         private void ShowTasks()
         {
-            var Tasks = user.Tasks;
-            bool isEmpty = Tasks.Count == 0 ? true : false;
+            var TasksList = user.TasksList;
+            bool isEmpty = TasksList.Count == 0 ? true : false;
 
             if (isEmpty)
             {
@@ -37,20 +37,43 @@ namespace XamarinTest
             else
             {
                 NoTasksLabel.IsVisible = false;
-                listView.IsVisible = true;                                         
-                listView.ItemsSource = Tasks;
+                listView.IsVisible = true;
+                listView.ItemsSource = null;
+                listView.ItemsSource = TasksList;
             }
         }       
-        private void DeleteButtonClicked(object sender, EventArgs e)
+        private async void DeleteButtonClicked(object sender, EventArgs e)
         {
-            Button button = (Button)sender;
-            Tasks task = (Tasks)button.BindingContext;
-            //user.RemoveTask(task);
+            try
+            {
+                bool answer = await DisplayAlert("Question", "Are you sure you want to delete the task?", "Yes", "No");
+                if (answer)
+                {
+                    Button button = (Button)sender;
+                    Tasks task = (Tasks)button.BindingContext;
+                    int Index = user.TasksList.IndexOf(task);
+                    user.RemoveTask(Index);
+                    ShowTasks();
+                }
+                else
+                {
+                    return;
+                }    
+            }
+            catch (Exception ex)
+            {
+               await OnDisplayAlert(ex);
+            }
+            
         }
 
         private void EditButtonClicked(object sender, EventArgs e)
         {
 
+        }
+        private async Task OnDisplayAlert(Exception ex)
+        {
+            await DisplayAlert("Error", $"{ex.Message}", "OK");
         }
     }
 }

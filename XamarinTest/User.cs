@@ -8,18 +8,34 @@ namespace XamarinTest
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public List<Tasks> Tasks { get; set; }
+        public List<Tasks> TasksList { get; set; }
         
         public void AddTask(string description)
         {
             Tasks task = new Tasks(description);
-            Tasks.Add(task);
+            TasksList.Add(task);
+        }
+        public void RemoveTask(int index)
+        {
+            if (index >= 0 && index < TasksList.Count)
+            {
+                TasksList.RemoveAt(index);
+                for (int i = index; i < TasksList.Count; i++)
+                {
+                    TasksList[i].Id = (i + 1) + ". ";
+                }
+                Tasks.TaskIdCounter--;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException("Invalid task index!");
+            }
         }
         public User(string firstName, string lastName, string username, string password) : base(firstName, lastName)
         {
             this.Username = username;
             this.Password = password;
-            this.Tasks = new List<Tasks>();
+            this.TasksList = new List<Tasks>();
         }
         public User() { }
     }
