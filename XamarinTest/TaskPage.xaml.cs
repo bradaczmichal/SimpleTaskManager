@@ -67,9 +67,30 @@ namespace XamarinTest
             
         }
 
-        private void EditButtonClicked(object sender, EventArgs e)
+        private async void EditButtonClicked(object sender, EventArgs e)
         {
-
+            try
+            {
+                Button button = (Button)sender;
+                Tasks task = (Tasks)button.BindingContext;
+                string BeforeEditTask = task.Description;
+                int Index = user.TasksList.IndexOf(task);
+                string Edit = await DisplayPromptAsync("Question", "Edit task:");
+                if(!string.IsNullOrEmpty(Edit))
+                {
+                    user.EditTask(Index, Edit);
+                }
+                else
+                {
+                    user.EditTask(Index, BeforeEditTask);
+                }
+                
+                ShowTasks();
+            }
+            catch(Exception ex)
+            {
+                await OnDisplayAlert(ex);
+            }
         }
         private async Task OnDisplayAlert(Exception ex)
         {
