@@ -32,19 +32,19 @@ namespace XamarinTest
 				string username = UsernameEntry.Text;
 				string password = PasswordEntry.Text;
 				User user = new User(firstName,lastName,username,password);
-				DisplayGreeting(firstName, lastName);
+				await OnDisplayAlert(firstName, lastName);		
 				await Navigation.PushAsync(new MainPage());
 			}
 			catch (Exception ex)
             {
-				DisplayInvalidInput(ex);
+				await OnDisplayAlert(ex);
             }
         }
-		private async void DisplayInvalidInput(Exception ex)
+		private async Task OnDisplayAlert(Exception ex)
         {
-			await DisplayAlert("Error",$"{ex.Message}", "Ok");
+			await DisplayAlert("Error",$"{ex.Message}", "OK");
         }
-		private async void DisplayGreeting(string FirstName, string LastName)
+		private async Task OnDisplayAlert(string FirstName, string LastName)
         {
 			await DisplayAlert("Success", $"Congratulations {FirstName } {LastName} your account has been created!", "OK");
         }

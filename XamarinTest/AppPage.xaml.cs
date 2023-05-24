@@ -12,19 +12,28 @@ namespace XamarinTest
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AppPage : ContentPage
     {
-        public AppPage()
+        User user = new User();
+        internal AppPage(User _user)
         {
+            user = _user;
             InitializeComponent();
         }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
 
+            FirstNameLabel.Text = "First name: " + user.FirstName;
+            LastNameLabel.Text = "Last name: " + user.LastName;
+            UsernameLabel.Text = "Username: " + user.Username;
+        }
         private void TasksClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new TaskPage());
+            Navigation.PushAsync(new TaskPage(user));
         }
 
         private void AddTasksClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new AddTaskPage());
+            Navigation.PushAsync(new AddTaskPage(user));
         }
 
         private void LogOutClicked(object sender, EventArgs e)

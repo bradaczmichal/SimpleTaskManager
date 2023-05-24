@@ -12,9 +12,37 @@ namespace XamarinTest
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddTaskPage : ContentPage
     {
-        public AddTaskPage()
+        User user = new User();
+        internal AddTaskPage(User _user)
         {
+            user = _user;
             InitializeComponent();
+        }
+
+        private async void AddTaskClicked(object sender, EventArgs e)
+        {
+            try
+            {  
+                if(string.IsNullOrWhiteSpace(AddTaskEntry.Text))
+                {
+                    throw new Exception("Invalid input!");
+                }
+                user.AddTask(AddTaskEntry.Text);
+                await OnDisplayAlert();
+            }
+            catch (Exception ex)
+            {
+                await OnDisplayAlert(ex);
+            }
+            
+        }
+        private async Task OnDisplayAlert(Exception ex)
+        {
+            await DisplayAlert("Error", $"{ex.Message}", "OK");
+        }
+        private async Task OnDisplayAlert()
+        {
+            await DisplayAlert("Success", "Your task has been added!", "OK");
         }
     }
 }

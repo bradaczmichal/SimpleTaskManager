@@ -17,6 +17,23 @@
                         <StackLayout>
                             <Label Text="YOUR TASKS" FontFamily="Cambria" FontSize="27" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center" Margin="0,20,0,0"/>
                         </StackLayout>
+                        <StackLayout>
+                            <Label x:Name="NoTasksLabel" Text="No tasks added!" IsVisible="false" HorizontalTextAlignment="Center" FontSize="22" Margin="0,50,0,0"/>
+                         </StackLayout>
+                            <StackLayout>
+                            <ListView x:Name="listView">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="{Binding Number}" />
+                                                <Label Text="{Binding Text}" />
+                                            </StackLayout>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
                     </StackLayout>
                 </Frame>
             </StackLayout>

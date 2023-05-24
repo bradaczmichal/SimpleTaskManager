@@ -20,11 +20,11 @@
                         <StackLayout Margin="0,20,0,0">
                             <StackLayout Margin="0,15,0,0">
                                 <Frame BackgroundColor="White" BorderColor="Black" CornerRadius="40" HorizontalOptions="FillAndExpand" HeightRequest="35">
-                                    <Entry Placeholder="Add task" TextColor="DodgerBlue" HorizontalOptions="FillAndExpand" FontSize="13"/>
+                                    <Entry x:Name="AddTaskEntry" Placeholder="Add task" TextColor="DodgerBlue" HorizontalOptions="FillAndExpand" FontSize="13"/>
                                 </Frame>
                             </StackLayout>
                             <StackLayout>
-                                <Button Margin ="50,30,50,0" HeightRequest="60" CornerRadius="30" BackgroundColor="DodgerBlue" Text="Add task" TextColor="White" FontSize="20" FontAttributes="Bold" FontFamily="Cambria"/>
+                                <Button Margin ="50,30,50,0" HeightRequest="60" CornerRadius="30" BackgroundColor="DodgerBlue" Text="Add task" TextColor="White" FontSize="20" FontAttributes="Bold" FontFamily="Cambria" Clicked="AddTaskClicked"/>
                             </StackLayout>
                         </StackLayout>
                     </StackLayout>
