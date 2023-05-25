@@ -10,9 +10,9 @@ namespace XamarinTest
         public string Password { get; set; }
         public List<Tasks> TasksList { get; set; }
         
-        public void AddTask(string description)
+        public void AddTask(string description, DateTime start, DateTime end)
         {
-            Tasks task = new Tasks(description);
+            Tasks task = new Tasks(description, start, end);
             TasksList.Add(task);
         }
         public void RemoveTask(int index)

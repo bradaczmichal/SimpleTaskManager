@@ -9,12 +9,16 @@ namespace XamarinTest
         public static int TaskIdCounter { get; set; }
         public string Id { get; set; }
         public string Description { get; set; }
+        public DateTime BeginDateTask { get; set; }
+        public DateTime FinishDateTask { get; set; }
 
-        public Tasks(string description)
+        public Tasks(string description, DateTime start, DateTime end)
         {
             TaskIdCounter++;
             this.Id = TaskIdCounter.ToString() + ". ";
             this.Description = description;
+            this.BeginDateTask = start;
+            this.FinishDateTask = end;
         }
     }
 }

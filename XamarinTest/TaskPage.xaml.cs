@@ -96,5 +96,20 @@ namespace XamarinTest
         {
             await DisplayAlert("Error", $"{ex.Message}", "OK");
         }
+
+        private async void ListViewItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            if (e.Item is Tasks task)
+            {
+                string AlertMessage = "Task begin: " + task.BeginDateTask + "\n" + "Task finish: " + task.FinishDateTask;
+                await OnDisplayAlert(AlertMessage);                
+            }
+            if (sender is ListView listView)
+                listView.SelectedItem = null;
+        }
+        private async Task OnDisplayAlert(string message)
+        {
+           await DisplayAlert("Task duration", message, "OK");
+        }
     }
 }

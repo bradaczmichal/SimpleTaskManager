@@ -13,9 +13,18 @@ namespace XamarinTest
     public partial class AddTaskPage : ContentPage
     {
         User user = new User();
+        DateTime SelectedTime;
+        DateTime Now;
         internal AddTaskPage(User _user)
         {
             user = _user;
+            InitializeComponent();
+        }
+        internal AddTaskPage(User _user, DateTime start, DateTime end)
+        {
+            user = _user;
+            Now = start;
+            SelectedTime = end;
             InitializeComponent();
         }
 
@@ -26,8 +35,10 @@ namespace XamarinTest
                 if(string.IsNullOrWhiteSpace(AddTaskEntry.Text))
                 {                    
                     throw new Exception("Invalid input!");                   
-                }
-                user.AddTask(AddTaskEntry.Text);
+                }            
+                DateTime SelectedDateTime = datePicker.Date + timePicker.Time;
+                DateTime Now = DateTime.Now;
+                user.AddTask(AddTaskEntry.Text, Now, SelectedDateTime);
                 await OnDisplayAlert();
                 ClearEntry();
             }
