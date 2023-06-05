@@ -16,7 +16,7 @@ namespace XamarinTest
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SignUpPage : ContentPage
 	{
-
+        private readonly SqlConnection ConnectionString = new SqlConnection(@"Server=tcp:mainsrv.database.windows.net,1433;Initial Catalog=Database;Persist Security Info=False;User ID=adminsql;Password=Admin123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         public SignUpPage ()
 		{
 			InitializeComponent ();
@@ -65,7 +65,7 @@ namespace XamarinTest
             try
             {
                 ConnectionString.Open();
-                SqlCommand insert = new SqlCommand("INSERT INTO [User] VALUES (@FirstName, @LastName, @Username, @Password", ConnectionString);
+                SqlCommand insert = new SqlCommand("INSERT INTO [Users] VALUES (@FirstName, @LastName, @Username, @Password)", ConnectionString);
                 insert.Parameters.AddWithValue("@FirstName", firstName);
                 insert.Parameters.AddWithValue("@LastName", lastName);
                 insert.Parameters.AddWithValue("@Username", username);
