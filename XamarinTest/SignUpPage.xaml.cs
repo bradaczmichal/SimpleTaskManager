@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Data;
+using System.Data.SqlClient;
+using Xamarin.Essentials;
 
 namespace XamarinTest
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SignUpPage : ContentPage
 	{
-		public SignUpPage ()
+
+        public SignUpPage ()
 		{
 			InitializeComponent ();
 		}
@@ -30,7 +35,7 @@ namespace XamarinTest
 				string lastName = LastNameEntry.Text;
 				string username = UsernameEntry.Text;
 				string password = PasswordEntry.Text;
-				User user = new User(firstName,lastName,username,password);
+				await SaveToDataBase (firstName, lastName, username, password);
 				await OnDisplayAlert(firstName, lastName);		
 				await Navigation.PushAsync(new MainPage());
 			}
@@ -55,5 +60,26 @@ namespace XamarinTest
 			UsernameEntry.Text = string.Empty;
 			PasswordEntry.Text = string.Empty;
 		}
+        private async Task SaveToDataBase(string firstName, string lastName,  string username, string password)
+        {
+            try
+            {
+                ConnectionString.Open();
+                SqlCommand insert = new SqlCommand("INSERT INTO [User] VALUES (@FirstName, @LastName, @Username, @Password", ConnectionString);
+                insert.Parameters.AddWithValue("@FirstName", firstName);
+                insert.Parameters.AddWithValue("@LastName", lastName);
+                insert.Parameters.AddWithValue("@Username", username);
+                insert.Parameters.AddWithValue("@Password", password);
+                insert.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                await OnDisplayAlert(ex);
+            }
+            finally
+            {
+                ConnectionString.Close();
+            }
+        }
     }
 }
