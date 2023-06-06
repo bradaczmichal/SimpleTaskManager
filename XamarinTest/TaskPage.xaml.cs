@@ -54,9 +54,17 @@ namespace XamarinTest
                     Button button = (Button)sender;
                     Tasks task = (Tasks)button.BindingContext;
                     int Index = user.TasksList.IndexOf(task);
+                    string description = task.Description;
+                    using (SqlConnection connection = new SqlConnection(ConnectionString))
+                    {
+                        await connection.OpenAsync();                       
+                        SqlCommand command = new SqlCommand("DELETE FROM [Tasks] WHERE Description = @Description", connection);
+                        command.Parameters.AddWithValue("@Description", description);
+                        await command.ExecuteNonQueryAsync();                            
+                    }                    
                     user.RemoveTask(Index);
                     ShowTasks();
-                }
+                }  
                 else
                 {
                     return;
@@ -149,7 +157,6 @@ namespace XamarinTest
                 SqlDataReader reader = await command.ExecuteReaderAsync();
                 while (reader.Read())
                 {
-                    int taskId = reader.GetInt32(0);
                     string description = reader.GetString(1);
                     DateTime beginDate = reader.GetDateTime(2);
                     DateTime finishDate = reader.GetDateTime(3);
