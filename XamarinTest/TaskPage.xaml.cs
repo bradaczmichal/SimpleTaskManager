@@ -80,6 +80,14 @@ namespace XamarinTest
                 string Edit = await DisplayPromptAsync("Question", "Edit task:");
                 if(!string.IsNullOrEmpty(Edit))
                 {
+                    using (SqlConnection connection = new SqlConnection(ConnectionString))
+                    {
+                        await connection.OpenAsync();
+                        SqlCommand command = new SqlCommand("UPDATE [Tasks] SET Description = @Description WHERE Description = @BeforeDescription", connection);
+                        command.Parameters.AddWithValue("@Description", Edit);
+                        command.Parameters.AddWithValue("@BeforeDescription", BeforeEditTask);
+                        await command.ExecuteNonQueryAsync();
+                    }
                     user.EditTask(Index, Edit);
                 }
                 else
@@ -136,7 +144,7 @@ namespace XamarinTest
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand("SELECT TaskId, Description, BeginDateTask, FinishDateTask FROM Tasks WHERE UserId = @UserId", connection);
+                SqlCommand command = new SqlCommand("SELECT TaskId, Description, BeginDateTask, FinishDateTask FROM [Tasks] WHERE UserId = @UserId", connection);
                 command.Parameters.AddWithValue("@UserId", userId);
                 SqlDataReader reader = await command.ExecuteReaderAsync();
                 while (reader.Read())
@@ -159,6 +167,6 @@ namespace XamarinTest
                 reader.Close();
             }
             ShowTasks();
-        }
+        }       
     }
 }
