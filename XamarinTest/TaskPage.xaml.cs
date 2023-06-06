@@ -23,13 +23,11 @@ namespace XamarinTest
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await ShowTasks();
-           
-        }
-        private async Task ShowTasks()
-        {
             int UserId = await GetUserIdFromUsername(user.Username);
             await LoadTasksForUser(UserId);
+        }
+        private void ShowTasks()
+        {
             var TasksList = user.TasksList;
             bool isEmpty = TasksList.Count == 0 ? true : false;
 
@@ -57,7 +55,7 @@ namespace XamarinTest
                     Tasks task = (Tasks)button.BindingContext;
                     int Index = user.TasksList.IndexOf(task);
                     user.RemoveTask(Index);
-                    await ShowTasks();
+                    ShowTasks();
                 }
                 else
                 {
@@ -88,7 +86,7 @@ namespace XamarinTest
                 {
                     user.EditTask(Index, BeforeEditTask);
                 }                
-                await ShowTasks();
+                ShowTasks();
             }
             catch(Exception ex)
             {
@@ -143,14 +141,24 @@ namespace XamarinTest
                 SqlDataReader reader = await command.ExecuteReaderAsync();
                 while (reader.Read())
                 {
+                    int taskId = reader.GetInt32(0);
                     string description = reader.GetString(1);
                     DateTime beginDate = reader.GetDateTime(2);
                     DateTime finishDate = reader.GetDateTime(3);
-                    user.AddTask(description, beginDate, finishDate, userId);
+
+                    if (!user.TasksList.Exists(task => (task.Description == description)
+                        && (task.BeginDateTask == beginDate) && (task.FinishDateTask) == finishDate))
+                    {
+                        user.AddTask(description, beginDate, finishDate, userId);
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
                 reader.Close();
             }
+            ShowTasks();
         }
-
     }
 }
