@@ -32,8 +32,6 @@
                                                     <ColumnDefinition Width="Auto" />
                                                     <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
-
-                                                <Label Text="{Binding Id}" VerticalTextAlignment="Center" Margin="10,0,0,10" Grid.Column="0" />
                                                 <Label Text="{Binding Description}" VerticalTextAlignment="Center" Margin="10,0,0,10" Grid.Column="1" />
                                                 <Button Text="Edit" Clicked="EditButtonClicked" WidthRequest="60" Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" FontSize="10"/>
                                                 <Button Text="Delete" Clicked="DeleteButtonClicked" WidthRequest="60" Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" FontSize="10"/>

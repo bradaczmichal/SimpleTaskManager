@@ -20,11 +20,6 @@ namespace XamarinTest
             if (index >= 0 && index < TasksList.Count)
             {
                 TasksList.RemoveAt(index);
-                for (int i = index; i < TasksList.Count; i++)
-                {
-                    TasksList[i].Id = (i + 1) + ". ";
-                }
-                Tasks.TaskIdCounter--;
             }
             else
             {

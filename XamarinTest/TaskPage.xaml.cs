@@ -53,17 +53,18 @@ namespace XamarinTest
                 {
                     Button button = (Button)sender;
                     Tasks task = (Tasks)button.BindingContext;
+                    int UserId = await GetUserIdFromUsername(user.Username);
                     int Index = user.TasksList.IndexOf(task);
                     string description = task.Description;
                     using (SqlConnection connection = new SqlConnection(ConnectionString))
                     {
-                        await connection.OpenAsync();                       
-                        SqlCommand command = new SqlCommand("DELETE FROM [Tasks] WHERE Description = @Description", connection);
-                        command.Parameters.AddWithValue("@Description", description);
+                        await connection.OpenAsync();
+                        int TaskId = await GetTaskIdFromDescription(description);
+                        SqlCommand command = new SqlCommand("DELETE FROM [Tasks] WHERE TaskId = @TaskId", connection);
+                        command.Parameters.AddWithValue("@TaskId", TaskId);
                         await command.ExecuteNonQueryAsync();                            
-                    }                    
-                    user.RemoveTask(Index);
-                    ShowTasks();
+                    }
+                    await LoadTasksForUser(UserId);
                 }  
                 else
                 {
@@ -84,25 +85,25 @@ namespace XamarinTest
                 Button button = (Button)sender;
                 Tasks task = (Tasks)button.BindingContext;
                 string BeforeEditTask = task.Description;
-                int Index = user.TasksList.IndexOf(task);
                 string Edit = await DisplayPromptAsync("Question", "Edit task:");
-                if(!string.IsNullOrEmpty(Edit))
+                int UserId = await GetUserIdFromUsername(user.Username);
+                if (!string.IsNullOrEmpty(Edit))
                 {
-                    using (SqlConnection connection = new SqlConnection(ConnectionString))
+                    using(SqlConnection connection = new SqlConnection(ConnectionString))
                     {
                         await connection.OpenAsync();
-                        SqlCommand command = new SqlCommand("UPDATE [Tasks] SET Description = @Description WHERE Description = @BeforeDescription", connection);
+                        int TaskId = await GetTaskIdFromDescription(BeforeEditTask);  
+                        SqlCommand command = new SqlCommand("UPDATE [Tasks] SET Description = @Description WHERE TaskId = @TaskId", connection);
                         command.Parameters.AddWithValue("@Description", Edit);
-                        command.Parameters.AddWithValue("@BeforeDescription", BeforeEditTask);
-                        await command.ExecuteNonQueryAsync();
+                        command.Parameters.AddWithValue("@TaskId", TaskId);
+                        await command.ExecuteNonQueryAsync();                        
                     }
-                    user.EditTask(Index, Edit);
+                    await LoadTasksForUser(UserId);
                 }
                 else
                 {
-                    user.EditTask(Index, BeforeEditTask);
-                }                
-                ShowTasks();
+                    await LoadTasksForUser(UserId);
+                }
             }
             catch(Exception ex)
             {
@@ -147,8 +148,28 @@ namespace XamarinTest
             }
             return userId;
         }
+        public async Task<int> GetTaskIdFromDescription(string description)
+        {
+            int TaskId = -1;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                await connection.OpenAsync();
+                SqlCommand command = new SqlCommand("SELECT TaskId FROM [Tasks] WHERE Description = @Description", connection);
+                command.Parameters.AddWithValue("@Description", description);
+                object result = await command.ExecuteScalarAsync();
+
+                if (result != null && int.TryParse(result.ToString(), out int id))
+                {
+                    TaskId = id;
+                }
+
+            }
+            return TaskId;
+        }
         private async Task LoadTasksForUser(int userId)
         {
+            user.TasksList.Clear();
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 await connection.OpenAsync();
@@ -160,16 +181,7 @@ namespace XamarinTest
                     string description = reader.GetString(1);
                     DateTime beginDate = reader.GetDateTime(2);
                     DateTime finishDate = reader.GetDateTime(3);
-
-                    if (!user.TasksList.Exists(task => (task.Description == description)
-                        && (task.BeginDateTask == beginDate) && (task.FinishDateTask) == finishDate))
-                    {
-                        user.AddTask(description, beginDate, finishDate, userId);
-                    }
-                    else
-                    {
-                        continue;
-                    }
+                    user.AddTask(description, beginDate, finishDate, userId);                    
                 }
                 reader.Close();
             }
