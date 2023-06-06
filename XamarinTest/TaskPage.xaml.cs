@@ -6,26 +6,30 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Data.SqlClient;
 
 namespace XamarinTest
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TaskPage : ContentPage
     {
+        private readonly string ConnectionString = "Server=tcp:mainsrv.database.windows.net,1433;Initial Catalog=Database;Persist Security Info=False;User ID=adminsql;Password=Admin123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         User user = new User();
         internal TaskPage(User _user)
         {
             user = _user;
             InitializeComponent();
         }
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
-            ShowTasks();
+            await ShowTasks();
            
         }
-        private void ShowTasks()
+        private async Task ShowTasks()
         {
+            int UserId = await GetUserIdFromUsername(user.Username);
+            await LoadTasksForUser(UserId);
             var TasksList = user.TasksList;
             bool isEmpty = TasksList.Count == 0 ? true : false;
 
@@ -53,7 +57,7 @@ namespace XamarinTest
                     Tasks task = (Tasks)button.BindingContext;
                     int Index = user.TasksList.IndexOf(task);
                     user.RemoveTask(Index);
-                    ShowTasks();
+                    await ShowTasks();
                 }
                 else
                 {
@@ -84,7 +88,7 @@ namespace XamarinTest
                 {
                     user.EditTask(Index, BeforeEditTask);
                 }                
-                ShowTasks();
+                await ShowTasks();
             }
             catch(Exception ex)
             {
@@ -111,5 +115,42 @@ namespace XamarinTest
         {
            await DisplayAlert("Task duration", message, "OK");
         }
+        public async Task<int> GetUserIdFromUsername(string username)
+        {
+            int userId = -1;
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                await connection.OpenAsync();
+                SqlCommand command = new SqlCommand("SELECT UserId FROM [Users] WHERE Username = @Username", connection);
+                command.Parameters.AddWithValue("@Username", username);
+                object result = await command.ExecuteScalarAsync();
+
+                if (result != null && int.TryParse(result.ToString(), out int id))
+                {
+                    userId = id;
+                }
+            }
+            return userId;
+        }
+        private async Task LoadTasksForUser(int userId)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                await connection.OpenAsync();
+                SqlCommand command = new SqlCommand("SELECT TaskId, Description, BeginDateTask, FinishDateTask FROM Tasks WHERE UserId = @UserId", connection);
+                command.Parameters.AddWithValue("@UserId", userId);
+                SqlDataReader reader = await command.ExecuteReaderAsync();
+                while (reader.Read())
+                {
+                    string description = reader.GetString(1);
+                    DateTime beginDate = reader.GetDateTime(2);
+                    DateTime finishDate = reader.GetDateTime(3);
+                    user.AddTask(description, beginDate, finishDate, userId);
+                }
+                reader.Close();
+            }
+        }
+
     }
 }

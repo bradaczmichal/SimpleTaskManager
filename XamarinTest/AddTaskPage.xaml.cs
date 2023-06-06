@@ -14,20 +14,12 @@ namespace XamarinTest
     {
         private readonly string ConnectionString = "Server=tcp:mainsrv.database.windows.net,1433;Initial Catalog=Database;Persist Security Info=False;User ID=adminsql;Password=Admin123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         User user = new User();
-        DateTime SelectedTime;
-        DateTime Now;
         internal AddTaskPage(User _user)
         {
             user = _user;
             InitializeComponent();
         }
-        internal AddTaskPage(User _user, DateTime start, DateTime end)
-        {
-            user = _user;
-            Now = start;
-            SelectedTime = end;
-            InitializeComponent();
-        }
+
 
         private async void AddTaskClicked(object sender, EventArgs e)
         {
