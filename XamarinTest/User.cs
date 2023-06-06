@@ -15,28 +15,7 @@ namespace XamarinTest
             Tasks task = new Tasks(description, start, end, userid);
             TasksList.Add(task);
         }
-        public void RemoveTask(int index)
-        {
-            if (index >= 0 && index < TasksList.Count)
-            {
-                TasksList.RemoveAt(index);
-            }
-            else
-            {
-                throw new IndexOutOfRangeException("Invalid task index!");
-            }
-        }
-        public void EditTask(int index, string edited)
-        {
-            if (index >= 0 && index < TasksList.Count)
-            {
-                TasksList[index].Description = edited;               
-            }
-            else
-            {
-                throw new IndexOutOfRangeException("Invalid task index!");
-            }
-        }
+        
         public User(string firstName, string lastName, string username, string password) : base(firstName, lastName)
         {
             this.Username = username;
