@@ -26,7 +26,7 @@
                             <StackLayout>
                                 <Label Text="Select the end time for the task" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center" Margin="0,30,0,30" />
                                 <DatePicker x:Name="datePicker"/>
-                                <TimePicker x:Name="timePicker"/>
+                                <TimePicker x:Name="timePicker" Format="HH:mm" />
                                 <Button Margin ="50,50,50,0" HeightRequest="60" CornerRadius="30" BackgroundColor="DodgerBlue" Text="Add task" TextColor="White" FontSize="20" FontAttributes="Bold" FontFamily="Cambria" Clicked="AddTaskClicked"/>
                             </StackLayout>
                         </StackLayout>
