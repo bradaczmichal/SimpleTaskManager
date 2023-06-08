@@ -40,10 +40,9 @@ namespace XamarinTest
             {
                 NoTasksLabel.IsVisible = false;
                 listView.IsVisible = true;
-
-                var groupedTasks = TasksList.GroupBy(task => task.FinishDateTask.Date);
-
+                IEnumerable<IGrouping<DateTime, Tasks>> groupedTasks = (IEnumerable<IGrouping<DateTime, Tasks>>)TasksList.GroupBy(task => task.FinishDateTask.Date);
                 listView.ItemsSource = groupedTasks;
+
             }
         }
 
@@ -173,8 +172,6 @@ namespace XamarinTest
                 }
                 reader.Close();
             }
-
-            user.TasksList.Sort((x, y) => DateTime.Compare(x.FinishDateTask, y.FinishDateTask));
 
             ShowTasks();
         }
