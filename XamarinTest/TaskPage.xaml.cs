@@ -40,10 +40,13 @@ namespace XamarinTest
             {
                 NoTasksLabel.IsVisible = false;
                 listView.IsVisible = true;
-                listView.ItemsSource = null;
-                listView.ItemsSource = TasksList;
+
+                var groupedTasks = TasksList.GroupBy(task => task.FinishDateTask.Date);
+
+                listView.ItemsSource = groupedTasks;
             }
-        }       
+        }
+
         private async void DeleteButtonClicked(object sender, EventArgs e)
         {
             try
@@ -109,27 +112,12 @@ namespace XamarinTest
             {
                 await OnDisplayAlert(ex);
             }
-        }
-
-        private async void ListViewItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            if (e.Item is Tasks task)
-            {
-                string AlertMessage = "Task begin: " + task.BeginDateTask + "\n" + "Task finish: " + task.FinishDateTask;
-                await OnDisplayAlert(AlertMessage);
-            }
-            if (sender is ListView listView)
-                listView.SelectedItem = null;
-        }
+        }      
         private async Task OnDisplayAlert(Exception ex)
         {
             await DisplayAlert("Error", $"{ex.Message}", "OK");
         }
-
-        private async Task OnDisplayAlert(string message)
-        {
-           await DisplayAlert("Task duration", message, "OK");
-        }
+       
         public async Task<int> GetUserIdFromUsername(string username)
         {
             int userId = -1;
@@ -173,7 +161,7 @@ namespace XamarinTest
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand("SELECT TaskId, Description, BeginDateTask, FinishDateTask FROM [Tasks] WHERE UserId = @UserId", connection);
+                SqlCommand command = new SqlCommand("SELECT TaskId, Description, BeginDateTask, FinishDateTask FROM [Tasks] WHERE UserId = @UserId ORDER BY FinishDateTask", connection);
                 command.Parameters.AddWithValue("@UserId", userId);
                 SqlDataReader reader = await command.ExecuteReaderAsync();
                 while (reader.Read())
@@ -181,11 +169,15 @@ namespace XamarinTest
                     string description = reader.GetString(1);
                     DateTime beginDate = reader.GetDateTime(2);
                     DateTime finishDate = reader.GetDateTime(3);
-                    user.AddTask(description, beginDate, finishDate, userId);                    
+                    user.AddTask(description, beginDate, finishDate, userId);
                 }
                 reader.Close();
             }
+
+            user.TasksList.Sort((x, y) => DateTime.Compare(x.FinishDateTask, y.FinishDateTask));
+
             ShowTasks();
-        }       
+        }
+
     }
 }
